@@ -1,3 +1,6 @@
+<?php
+   include("config.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +13,10 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
     <!--BTS ICON-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+    <!--ALERTIFY-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
     <style>
         body {
             /* background-image: url("img/https://img.freepik.com/free-vector/modern-white-with-background-gradient-gold-luxury-designs-abstract_343694-2258.jpg?w=1380&t=st=1693200337~exp=1693200937~hmac=1e36d8f34ee53b3d14eb0d5cc42453b77baa9f5da29195fd25b24efde93fb05c") !important;
@@ -77,7 +84,8 @@
                 </div>
                 <div class="modal-body text-start">
 
-                    <form action="">
+                    <form id="reg">
+                        <div id="errorMessage" class="alert alert-warning d-none"></div>
                         <div class="class mb-3 text-center">
                             <img src="img/logo-no-background.svg" class="image-fluid" alt="Guvi Logo" width="50%"
                                 height="25%">
@@ -86,26 +94,28 @@
                             <span class="bi-envelope-fill"></span>
                             <label for="mail" class="form-label">Email
                                 address</label>
-                            <input type="email" class="form-control" id="mail" placeholder="Enter email">
+                            <input type="email" name="email" class="form-control" id="mail" placeholder="Enter email">
                         </div>
                         <div class="mb-3 bi-person-lines-fill">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter name">
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Enter name">
                         </div>
                         <div class="mb-3 bi-key-fill">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter password">
+                            <input type="password" name="pwd" class="form-control" id="password"
+                                placeholder="Enter password">
                         </div>
                         <div class="mb-3 bi-telephone-fill">
                             <label for="phone" class="form-label">Mobile
                                 number</label>
-                            <input type="tel" class="form-control" id="phone" placeholder="Enter Mobile number">
+                            <input type="tel" name="mobile" class="form-control" id="phone"
+                                placeholder="Enter Mobile number">
                         </div>
-                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success ">Register</button>
+                    <button type="submit" name="reg" class="btn btn-success ">Register</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -113,15 +123,15 @@
 
 
 
-
-    <div class="container d-flex justify-content-center align-items-center vh-100  text-center">
-        <div class="left w-50 gy-sm-3 gy-md-2 py-5 d-flex flex-column align-items-center">
+    <div id="user"></div>
+    <div class="container d-flex justify-content-center align-items-center vh-100  text-center " >
+        <div class="left w-50 gy-sm-3 gy-md-2 py-5 d-flex flex-column align-items-center"> 
             <div class="welcomemsg">
                 <!-- <img src="img/tplogo.png" alt="OUR LOGO" class="img-fluid mb-5"
                     style="mix-blend-mode: multiply;border: none; height: 100px; width: auto;" /> -->
                 <p class="display-6 mb-5">Welcome...!</p>
             </div>
-            <form action="adminlogin.php" method="POST">
+            <form>
 
                 <div class="form-content row mx-1">
                     <div class="col-12 form-floating mb-5">
@@ -137,7 +147,7 @@
                 </div>
 
 
-                <div class="d-grid d-block col-7 mx-auto mb-3">
+                <div class="d-grid d-block col-7 mx-auto mb-3 ">
                     <button class="btn-lg btn-outline-success bg-success text-light rounded-pill" type="submit">
                         Login
                     </button>
@@ -165,6 +175,55 @@
 
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script>
+        $(document).on('submit', '#reg', function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            formData.append("save_reg", true);
+
+            console.log(formData);
+            $.ajax({
+                type: "POST",
+                url: "insert.php",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+
+                    var res = jQuery.parseJSON(response);
+                    console.log(res);
+                    console.log(1);
+                    if (res.status == 422) {
+                        console.log('if entered');
+                        $('#errorMessage').removeClass('d-none');
+                        $('#errorMessage').text(res.message);
+
+                    } else if (res.status == 200) {
+                        console.log('elseif eentered');
+                        $('#errorMessage').addClass('d-none');
+                        $('#reg')[0].reset();
+
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.success(res.message);
+                        setTimeout(function () {
+                    window.location.href = "index.php";
+                }, 2000);
+
+                    } else if (res.status == 500) {
+                        console.log('2nd elseif entered');
+                        $('#errorMessage').addClass('d-none');
+                        $('#reg')[0].reset();
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.error(res.message);
+                    }
+                }
+            });
+
+        });
+    </script>
 </body>
 
 </html>
