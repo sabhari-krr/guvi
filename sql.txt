@@ -1,1 +1,16 @@
+CREATE DATABASE guvi;
 
+CREATE TABLE users(
+    id INT(100) PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(30) NOT NULL UNIQUE,
+    name VARCHAR(50) NOT NULL,
+    pwd VARCHAR(30) NOT NULL,
+    mobile INT(10) NOT NULL,
+    age INT(4) NOT NULL,
+    dob DATE NOT NULL,
+    city VARCHAR(30) NOT NULL,
+    state VARCHAR(30) NOT NULL,
+    zip INT(6) NOT NULL,
+    createdat DATETIME DEFAULT CURRENT_TIME,
+    profilepic VARCHAR(200)
+);
