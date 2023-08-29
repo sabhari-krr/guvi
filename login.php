@@ -1,5 +1,6 @@
 <?php
 require "config.php";
+session_start();
 if(isset($_POST['log']))
 {
 $email = mysqli_real_escape_string($db,$_POST['email']);
@@ -34,6 +35,12 @@ $email = mysqli_real_escape_string($db,$_POST['email']);
      $count = mysqli_num_rows($query_run);
         if($count==1)//Validating user
         {
+            $_SESSION['loggedin']==TRUE;
+            $idfetchquery="SELECT id FROM users WHERE email='$email';";
+            $id=mysqli_query($db,$idfetchquery);
+            $user = mysqli_fetch_assoc($id);
+            $_SESSION['loggeduserid'] = $user['id'];
+            // $_SESSION['loggeduserid'] =$id;
             $res = [
                 'status' => 200,
                 'message' => 'Login Successfully'
