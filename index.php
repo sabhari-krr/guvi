@@ -21,7 +21,7 @@
         body {
             /* background-image: url("img/https://img.freepik.com/free-vector/modern-white-with-background-gradient-gold-luxury-designs-abstract_343694-2258.jpg?w=1380&t=st=1693200337~exp=1693200937~hmac=1e36d8f34ee53b3d14eb0d5cc42453b77baa9f5da29195fd25b24efde93fb05c") !important;
             background-repeat: no-repeat;
-            background-size: cover; */
+            background-size: cover; */  
             background: linear-gradient(45deg, #4A4D4B, #8ABE53, #8ABE53, #FFFFFF);
 
         }
@@ -131,28 +131,32 @@
                     style="mix-blend-mode: multiply;border: none; height: 100px; width: auto;" /> -->
                 <p class="display-6 mb-5">Welcome...!</p>
             </div>
-            <form>
+            <form id="log">
+                <div class="row mx-auto">
 
+                    <div id="loginerrorMessage" class="alert alert-danger d-none col-auto justify-content-center mx-auto text-center rounded-3 shadow"></div>
+                </div>
                 <div class="form-content row mx-1">
                     <div class="col-12 form-floating mb-5">
                         <input type="email" class="form-control rounded-pill" name="email" id="floatingInput"
-                            placeholder="name@example.com" required />
+                            placeholder="name@example.com" />
                         <label for="floatingInput">&nbsp;&nbsp;&nbsp;&nbsp;Email address</label>
                     </div>
                     <div class="col-12 form-floating mb-5">
-                        <input type="password" class="form-control rounded-pill" name="apwd" id="floatingInput"
-                            placeholder="name@example.com" required />
+                        <input type="password" class="form-control rounded-pill" name="pwd" id="floatingInput"
+                            placeholder="name@example.com" />
                         <label for="floatingInput">&nbsp;&nbsp;&nbsp;&nbsp;Password</label>
                     </div>
                 </div>
 
 
                 <div class="d-grid d-block col-7 mx-auto mb-3 ">
-                    <button class="btn-lg btn-outline-success bg-success text-light rounded-pill" type="submit">
+                    <button class="btn-lg btn-outline-success bg-success text-light rounded-pill" type="submit" name="log">
                         Login
                     </button>
                 </div>
 
+            </form>
                 <!-- Modal Button-->
                 <div class="d-grid d-block col-7 mx-auto mb-3">
                     <button class="btn-lg  btn-outline-success rounded-pill" type="button" data-bs-toggle="modal"
@@ -168,7 +172,6 @@
                         <a href="https://www.google.com" class="text-black-50">Forgot Password</a>
                     </div>
                 </div>
-            </form>
         </div>
         <div class="right h-75 w-50 align-items-center justify-content-center">
             <img src="img/animatedlogin1.svg" alt="loginimage" width="500" height="500">
@@ -177,6 +180,7 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+        <!--REGISTRATION SCRIPT-->
     <script>
         $(document).on('submit', '#reg', function (e) {
             e.preventDefault();
@@ -218,6 +222,63 @@
                         $('#reg')[0].reset();
                         alertify.set('notifier', 'position', 'top-right');
                         alertify.error(res.message);
+                    }
+                }
+            });
+
+        });
+    </script>
+    <!--LOGIN SCRIPT-->
+    <script>
+        $(document).on('submit', '#log', function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            formData.append("log", true);
+
+            console.log(formData);
+            $.ajax({
+                type: "POST",
+                url: "login.php",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+
+                    var res = jQuery.parseJSON(response);
+                    console.log(res);
+                    console.log(1);
+                    if (res.status == 422) {
+                        console.log('if entered');
+                        $('#loginerrorMessage').removeClass('d-none');
+                        $('#loginerrorMessage').text(res.message);
+
+                    } else if (res.status == 200) {
+                        console.log('elseif eentered');
+                        $('#loginerrorMessage').addClass('d-none');
+                        $('#reg')[0].reset();
+
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.success(res.message);
+                        setTimeout(function () {
+                    window.location.href = "https://www.google.com";
+                }, 1000);
+
+                    } else if (res.status == 500) {
+                        console.log('2nd elseif entered');
+                        $('#loginerrorMessage').addClass('d-none');
+                        $('#reg')[0].reset();
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.error(res.message);
+                        
+                    }
+                    else if (res.status == 404) {
+                        console.log('2nd elseif entered');
+                        $('#errorMessage').addClass('d-none');
+                        $('#reg')[0].reset();
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.error(res.message);
+                        
                     }
                 }
             });
