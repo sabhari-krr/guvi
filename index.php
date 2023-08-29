@@ -261,7 +261,7 @@
                         alertify.set('notifier', 'position', 'top-right');
                         alertify.success(res.message);
                         setTimeout(function () {
-                    window.location.href = "https://www.google.com";
+                    window.location.href = "profile.php";
                 }, 1000);
 
                     } else if (res.status == 500) {
