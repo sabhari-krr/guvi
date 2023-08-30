@@ -48,8 +48,9 @@ echo $_SESSION['loggeduserid'];
 
                     <form id="upd">
                         <div id="errorMessage" class="alert alert-warning d-none"></div>
-                        <div class="class mb-3 text-center">
-                            <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Upload image</label>
+                            <input class="x form-control" type="file" accept="image/*" id="formFile" name="profilepic">
                         </div>
                         <div class=" mb-3">
                             <span class="bi-person-lines-fill"></span>
@@ -116,7 +117,7 @@ echo $_SESSION['loggeduserid'];
                 <div class="col-lg-4 disp">
                     <div class="card mb-4">
                         <div class="card-body text-center" id="leftcard">
-                            <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                            <img src="<?php echo $profilepic . '?' . time(); ?>" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
                             <h5 class="my-3"><?php echo $name; ?></h5>
                             <p class="text-muted mb-4"><?php echo $city . ', ' . $state . ', ' . $zip; ?></p>
                             <div class="d-flex justify-content-center mb-2">
@@ -300,11 +301,17 @@ echo $_SESSION['loggeduserid'];
 
                     } else if (res.status == 200) {
                         console.log('elseif eentered');
+                        $('#upd')[0].reset();
 
                         alertify.set('notifier', 'position', 'top-right');
                         alertify.success(res.message);
-                        $('#upd')[0].reset();
-                        $('#contentContainer').load(window.location.href + ' #contentContainer');
+                        var profilePicElement = document.querySelector('.img-fluid');
+                        if (profilePicElement) {
+                            var currentSrc = profilePicElement.getAttribute('src');
+                            var updatedSrc = currentSrc + '?' + new Date().getTime();
+                            profilePicElement.setAttribute('src', updatedSrc);
+                            $('#contentContainer').load(window.location.href + ' #contentContainer');
+                        }
                         $('#exampleModal').modal('hide');
 
                     } else if (res.status == 400) {
