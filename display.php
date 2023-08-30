@@ -16,5 +16,5 @@ if (isset($_SESSION['loggeduserid'])){
     $city = $val['city'];
     $state = $val['state'];
     $zip = $val['zip']; 
+    $profilepic= $val['profilepic'];
 }
-?>
