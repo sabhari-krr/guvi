@@ -25,6 +25,29 @@ if (isset($_POST['save_reg'])) {
     if (!empty($_POST['zip'])) {
         $updateFields[] = "zip='" . $_POST['zip'] . "'";
     }
+    if (!empty($_FILES['profilepic']['name'])) {
+        $s = $id;
+
+        $file_name = $_FILES['profilepic']['name'];
+        $file_tmp = $_FILES['profilepic']['tmp_name'];
+        $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+        $file_name = $s . "." . $ext;
+        $filePath = "images/profile/" . $file_name;
+
+        $oldImageFilePath = "images/profile/" . $s . ".*"; // Pattern to match old image
+        $oldImageFiles = glob($oldImageFilePath);
+        foreach ($oldImageFiles as $oldImage) {
+            unlink($oldImage);
+        }
+
+        $query = "UPDATE users SET profilepic = '$filePath' WHERE id = '$id'";
+        $run = mysqli_query($db, $query);
+
+        if ($run) {
+            move_uploaded_file($file_tmp, "images/profile/" . $file_name);
+            $updateFields[] = "profilepic='" . $filePath . "'";
+        }
+    }
     // $res = 700;
     // echo json_encode($res);
     // return;
