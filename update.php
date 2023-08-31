@@ -3,6 +3,7 @@ require "config.php";
 //Inserting into database
 session_start();
 $id = $_SESSION['loggeduserid'];
+//TO update profile
 if (isset($_POST['save_reg'])) {
     $sql = "SELECT * FROM users WHERE id ='$id';";
 
@@ -12,6 +13,12 @@ if (isset($_POST['save_reg'])) {
     }
     if (!empty($_POST['dob'])) {
         $updateFields[] = "dob='" . $_POST['dob'] . "'";
+        $birthYear = new DateTime($_POST['dob']);
+        $today = new DateTime();
+        $age = $today->diff($birthYear)->y;
+
+        $updateAgeQuery = "UPDATE users SET age = '$age' WHERE id = '$id';";
+        mysqli_query($db, $updateAgeQuery);
     }
     if (!empty($_POST['mobile'])) {
         $updateFields[] = "mobile='" . $_POST['mobile'] . "'";
@@ -48,9 +55,6 @@ if (isset($_POST['save_reg'])) {
             $updateFields[] = "profilepic='" . $filePath . "'";
         }
     }
-    // $res = 700;
-    // echo json_encode($res);
-    // return;
     if (!empty($updateFields)) {
         $updateFieldsStr = implode(', ', $updateFields);
         $query = "UPDATE users SET $updateFieldsStr WHERE id='$id';";
@@ -75,6 +79,46 @@ if (isset($_POST['save_reg'])) {
         $res = [
             'status' => 404,
             'message' => 'No fields to update'
+        ];
+        echo json_encode($res);
+        return;
+    }
+}
+//To update Social links
+if (isset($_POST['linkclick'])) {
+    $sql = "SELECT * FROM users WHERE id ='$id';";
+
+    $updateFields = array();
+    if (!empty($_POST['linkedin'])) {
+        $updateFields[] = "linkedin='" . $_POST['linkedin'] . "'";
+    }
+    if (!empty($_POST['github'])) {
+        $updateFields[] = "github='" . $_POST['github'] . "'";
+    }
+    if (!empty($updateFields)) {
+        $updateFieldsStr = implode(', ', $updateFields);
+        $query = "UPDATE users SET $updateFieldsStr WHERE id='$id';";
+        $result = mysqli_query($db, $query);
+
+        if ($result) {
+            $res = [
+                'status' => 200,
+                'message' => 'Updated Successfully'
+            ];
+            echo json_encode($res);
+            return;
+        } else {
+            $res = [
+                'status' => 500,
+                'message' => 'Details Not updated, Give relevant input'
+            ];
+            echo json_encode($res);
+            return;
+        }
+    } else {
+        $res = [
+            'status' => 404,
+            'message' => 'No links to update'
         ];
         echo json_encode($res);
         return;
