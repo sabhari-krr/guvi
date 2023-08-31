@@ -1,5 +1,5 @@
 <?php
-   include("config.php");
+include("config.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,26 +7,32 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="img/favicon.png" type="image/x-icon">
-    <title>Admin login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <title>Guvi</title>
+    <link rel="icon" type="image/x-icon" href="img/guvi-website-favicon-color.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
     <!--BTS ICON-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
     <!--ALERTIFY-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&display=swap" rel="stylesheet">
     <style>
+        * {
+            font-family: 'DM Sans', sans-serif;
+        }
+
         body {
-            /* background-image: url("img/https://img.freepik.com/free-vector/modern-white-with-background-gradient-gold-luxury-designs-abstract_343694-2258.jpg?w=1380&t=st=1693200337~exp=1693200937~hmac=1e36d8f34ee53b3d14eb0d5cc42453b77baa9f5da29195fd25b24efde93fb05c") !important;
-            background-repeat: no-repeat;
-            background-size: cover; */  
             background: linear-gradient(45deg, #4A4D4B, #8ABE53, #8ABE53, #FFFFFF);
 
         }
 
-        @media (max-width: 1210px) {
+        @media (max-width: 1000px) {
+
+            /* #1210 was set */
             .right {
                 display: none !important;
 
@@ -67,15 +73,12 @@
 
         }
     </style>
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <!-- Modal body-->
-    <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Resistration Modal body-->
+    <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content p-2">
                 <div class="modal-header">
@@ -87,8 +90,7 @@
                     <form id="reg">
                         <div id="errorMessage" class="alert alert-warning d-none"></div>
                         <div class="class mb-3 text-center">
-                            <img src="img/logo-no-background.svg" class="image-fluid" alt="Guvi Logo" width="50%"
-                                height="25%">
+                            <img src="img/logo-no-background.svg" class="image-fluid" alt="Guvi Logo" width="50%" height="25%">
                         </div>
                         <div class=" mb-3">
                             <span class="bi-envelope-fill"></span>
@@ -102,14 +104,12 @@
                         </div>
                         <div class="mb-3 bi-key-fill">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" name="pwd" class="form-control" id="password"
-                                placeholder="Enter password">
+                            <input type="password" name="pwd" class="form-control" id="password" placeholder="Enter password">
                         </div>
                         <div class="mb-3 bi-telephone-fill">
                             <label for="phone" class="form-label">Mobile
                                 number</label>
-                            <input type="tel" name="mobile" class="form-control" id="phone"
-                                placeholder="Enter Mobile number">
+                            <input type="number" name="mobile" class="form-control" id="phone" placeholder="Enter Mobile number">
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -121,14 +121,47 @@
         </div>
     </div>
 
+    <!-- Forgot password modal body -->
+    <div class="modal fade" id="forgotpasswordmodal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content p-2">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Password </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
 
+                    <form id="forgotpassword">
+                        <div id="pwderrorMessage" class="alert alert-warning d-none"></div>
+                        <div class="mb-3">
+                            <i class="bi-envelope-fill "></i>
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email">
+                        </div>
+                        <div class=" mb-3">
+                            <i class="bi bi-telephone-fill"></i>
+                            <label for="mobile" class="form-label">Mobile number</label>
+                            <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Enter your mobile number">
+                        </div>
+                        <div class=" mb-3">
+                            <i class="bi bi-lock-fill"></i>
+                            <label for="newpwd" class="form-label">New password</label>
+                            <input type="password" name="newpwd" class="form-control" id="newpwd" placeholder="Enter new password">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="forgotpassword" class="btn btn-success">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="user"></div>
-    <div class="container d-flex justify-content-center align-items-center vh-100  text-center " >
-        <div class="left w-50 gy-sm-3 gy-md-2 py-5 d-flex flex-column align-items-center"> 
+    <div class="container d-flex justify-content-center align-items-center vh-100  text-center ">
+        <div class="left w-50 gy-sm-3 gy-md-2 py-5 d-flex flex-column align-items-center">
             <div class="welcomemsg">
-                <!-- <img src="img/tplogo.png" alt="OUR LOGO" class="img-fluid mb-5"
-                    style="mix-blend-mode: multiply;border: none; height: 100px; width: auto;" /> -->
                 <p class="display-6 mb-5">Welcome...!</p>
             </div>
             <form id="log">
@@ -138,13 +171,11 @@
                 </div>
                 <div class="form-content row mx-1">
                     <div class="col-12 form-floating mb-5">
-                        <input type="email" class="form-control rounded-pill" name="email" id="floatingInput"
-                            placeholder="name@example.com" />
+                        <input type="email" class="form-control rounded-pill" name="email" id="floatingInput" placeholder="name@example.com" />
                         <label for="floatingInput">&nbsp;&nbsp;&nbsp;&nbsp;Email address</label>
                     </div>
                     <div class="col-12 form-floating mb-5">
-                        <input type="password" class="form-control rounded-pill" name="pwd" id="floatingInput"
-                            placeholder="name@example.com" />
+                        <input type="password" class="form-control rounded-pill" name="pwd" id="floatingInput" placeholder="name@example.com" />
                         <label for="floatingInput">&nbsp;&nbsp;&nbsp;&nbsp;Password</label>
                     </div>
                 </div>
@@ -157,21 +188,19 @@
                 </div>
 
             </form>
-                <!-- Modal Button-->
-                <div class="d-grid d-block col-7 mx-auto mb-3">
-                    <button class="btn-lg  btn-outline-success rounded-pill" type="button" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                        Create Account
-                    </button>
+            <!-- Modal Button-->
+            <div class="d-grid d-block col-7 mx-auto mb-3">
+                <button class="btn-lg  btn-outline-success rounded-pill" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Create Account
+                </button>
+            </div>
+
+
+            <div class="row ">
+                <div class="col-auto mx-auto">
+                    <button type="button" class="btn-md btn-outline-success bg-success text-light rounded-pill p-1 px-3" data-bs-toggle="modal" data-bs-target="#forgotpasswordmodal"><i class="bi bi-lock-fill"></i>&nbsp;Forgot password</button>
                 </div>
-
-
-                <div class="row ">
-                    <div class="col-auto mx-auto">
-
-                        <a href="https://www.google.com" class="text-black-50">Forgot Password</a>
-                    </div>
-                </div>
+            </div>
         </div>
         <div class="right h-75 w-50 align-items-center justify-content-center">
             <img src="img/animatedlogin1.svg" alt="loginimage" width="500" height="500">
@@ -179,10 +208,10 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-        <!--REGISTRATION SCRIPT-->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <!--REGISTRATION SCRIPT-->
     <script>
-        $(document).on('submit', '#reg', function (e) {
+        $(document).on('submit', '#reg', function(e) {
             e.preventDefault();
 
             var formData = new FormData(this);
@@ -195,29 +224,26 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function (response) {
+                success: function(response) {
 
                     var res = jQuery.parseJSON(response);
                     console.log(res);
                     console.log(1);
                     if (res.status == 422) {
-                        console.log('if entered');
                         $('#errorMessage').removeClass('d-none');
                         $('#errorMessage').text(res.message);
 
                     } else if (res.status == 200) {
-                        console.log('elseif eentered');
                         $('#errorMessage').addClass('d-none');
                         $('#reg')[0].reset();
 
                         alertify.set('notifier', 'position', 'top-right');
                         alertify.success(res.message);
-                        setTimeout(function () {
-                    window.location.href = "index.php";
-                }, 2000);
+                        setTimeout(function() {
+                            window.location.href = "index.php";
+                        }, 2000);
 
                     } else if (res.status == 500) {
-                        console.log('2nd elseif entered');
                         $('#errorMessage').addClass('d-none');
                         $('#reg')[0].reset();
                         alertify.set('notifier', 'position', 'top-right');
@@ -230,7 +256,7 @@
     </script>
     <!--LOGIN SCRIPT-->
     <script>
-        $(document).on('submit', '#log', function (e) {
+        $(document).on('submit', '#log', function(e) {
             e.preventDefault();
 
             var formData = new FormData(this);
@@ -243,42 +269,85 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function (response) {
+                success: function(response) {
 
                     var res = jQuery.parseJSON(response);
                     console.log(res);
                     console.log(1);
                     if (res.status == 422) {
-                        console.log('if entered');
                         $('#loginerrorMessage').removeClass('d-none');
                         $('#loginerrorMessage').text(res.message);
 
                     } else if (res.status == 200) {
-                        console.log('elseif eentered');
                         $('#loginerrorMessage').addClass('d-none');
                         $('#reg')[0].reset();
 
                         alertify.set('notifier', 'position', 'top-right');
                         alertify.success(res.message);
-                        setTimeout(function () {
-                    window.location.href = "profile.php";
-                }, 1000);
+                        setTimeout(function() {
+                            window.location.href = "profile.php";
+                        }, 1000);
 
                     } else if (res.status == 500) {
-                        console.log('2nd elseif entered');
                         $('#loginerrorMessage').addClass('d-none');
                         $('#reg')[0].reset();
                         alertify.set('notifier', 'position', 'top-right');
                         alertify.error(res.message);
-                        
-                    }
-                    else if (res.status == 404) {
-                        console.log('2nd elseif entered');
+
+                    } else if (res.status == 404) {
                         $('#errorMessage').addClass('d-none');
                         $('#reg')[0].reset();
                         alertify.set('notifier', 'position', 'top-right');
                         alertify.error(res.message);
-                        
+
+                    }
+                }
+            });
+
+        });
+    </script>
+    <!-- FORGOT PASSWORD SCRIPT -->
+    <script>
+        $(document).on('submit', '#forgotpassword', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            formData.append("fpwd", true);
+            // Remove whitespace from the zip input value
+            console.log(formData);
+            $.ajax({
+                type: "POST",
+                url: "updatepwd.php",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+
+                    var res = jQuery.parseJSON(response);
+                    console.log(response);
+                    if (res.status == 404) {
+                        $('#pwderrorMessage').removeClass('d-none');
+                        $('#pwderrorMessage').text(res.message);
+
+                    } else if (res.status == 200) {
+                        $('#forgotpassword')[0].reset();
+
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.success(res.message);
+                        $('#forgotpasswordmodal').modal('hide');
+                        setTimeout(function() {
+                            window.location.href = "index.php";
+                        }, 1000);
+
+                    } else if (res.status == 500) {
+                        $('#pwderrorMessage').addClass('d-none');
+                        $('#forgotpassword')[0].reset();
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.error(res.message);
+                    } else if (res.status == 400) {
+                        $('#forgotpassword')[0].reset();
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.error(res.message);
                     }
                 }
             });
