@@ -1,7 +1,5 @@
 <?php
 include "config.php";
-
-session_start();
 if (isset($_SESSION['loggeduserid'])) {
 
     $id = $_SESSION['loggeduserid'];
