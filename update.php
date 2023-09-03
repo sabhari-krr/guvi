@@ -1,7 +1,7 @@
 <?php
 require "config.php";
-//Inserting into database
 session_start();
+//Inserting into database
 $id = $_SESSION['loggeduserid'];
 //TO update profile
 if (isset($_POST['save_reg'])) {
