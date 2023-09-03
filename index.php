@@ -1,5 +1,6 @@
 <?php
 include("config.php");
+include("session.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -265,7 +266,7 @@ include("config.php");
             console.log(formData);
             $.ajax({
                 type: "POST",
-                url: "login.php",
+                url: "session.php",
                 data: formData,
                 processData: false,
                 contentType: false,
