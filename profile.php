@@ -1,9 +1,7 @@
 <?php
 session_start();
-include "config.php";
 include "display.php";
 include "update.php";
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -166,9 +164,12 @@ include "update.php";
                             <h5 class="my-4 fs-3"><?php echo $name; ?></h5>
                             <p class="text-muted mb-4">
                                 <?php
-                                if ($city === null || $state == null || $zip == null) {
+                                if (($city === null && $state == null) && ($zip == null)) {
                                     echo 'NA , NA , NA';
                                 } else {
+                                    $city = $city ?? 'NA'; //replaces with NA if not set(Coalescing)
+                                    $state = $state ?? 'NA';
+                                    $zip = $zip ?? 'NA';
                                     echo $city . ', ' . $state . ', ' . $zip;
                                 }
                                 ?></p>
@@ -341,11 +342,11 @@ include "update.php";
     <script>
         $(document).on('click', '.logout', function(e) {
             e.preventDefault();
-
+            console.log('Logout button clicked');
             if (confirm('Are you sure you want to logout?')) {
                 $.ajax({
                     type: "POST",
-                    url: "logout.php",
+                    url: "session.php",
                     data: {
                         'logout': true
                     },
@@ -353,6 +354,7 @@ include "update.php";
 
                         var res = jQuery.parseJSON(response);
                         if (res.status == 200) {
+
 
                             alertify.set('notifier', 'position', 'top-right');
                             alertify.success(res.message);
@@ -383,7 +385,7 @@ include "update.php";
                 processData: false,
                 contentType: false,
                 success: function(response) {
-
+                    console.log(response);
                     var res = jQuery.parseJSON(response);
                     console.log(response);
                     if (res.status == 500) {
