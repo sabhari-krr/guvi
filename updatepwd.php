@@ -1,7 +1,6 @@
 <?php
 require "config.php";
 //Inserting into database
-session_start();
 //To update password
 if (isset($_POST['fpwd'])) {
     $email = mysqli_real_escape_string($db, $_POST['email']);
