@@ -1,7 +1,8 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 include "display.php";
-include "update.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -395,15 +396,18 @@ include "update.php";
                     } else if (res.status == 200) {
                         $('#upd')[0].reset();
 
+
                         alertify.set('notifier', 'position', 'top-right');
                         alertify.success(res.message);
                         var profilePicElement = document.querySelector('.img-fluid');
+
                         if (profilePicElement) {
                             var currentSrc = profilePicElement.getAttribute('src');
                             var updatedSrc = currentSrc + '?' + new Date().getTime();
                             profilePicElement.setAttribute('src', updatedSrc);
                             $('#contentContainer').load(window.location.href + ' #contentContainer');
                         }
+
                         $('#exampleModal').modal('hide');
 
                     } else if (res.status == 400) {
