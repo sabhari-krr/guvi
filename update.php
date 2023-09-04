@@ -1,5 +1,5 @@
 <?php
-require "config.php";
+include_once "config.php";
 session_start();
 //Inserting into database
 $id = $_SESSION['loggeduserid'];
