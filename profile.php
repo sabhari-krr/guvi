@@ -368,7 +368,7 @@ include "display.php";
             }
         });
     </script>
-    <!-- Profile Updation Script -->
+    <!-- Profile Updation Script-->
     <script>
         $(document).on('submit', '#upd', function(e) {
             e.preventDefault();
